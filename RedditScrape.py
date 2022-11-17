@@ -52,7 +52,7 @@ class RedditScrape:
     :type filename: str
     """
     x = getattr(self, attribute_name)
-    pd.DataFrame(x).to_csv(repr(filename), # basically r'attribute_name'
+    pd.DataFrame(x).to_csv(repr(filename), # basically r'filename'
                            encoding='utf-8-sig', index = False)
 # note that attributes can be edited AFTER inititialization directly
 # instance = RedditScrape('cat', dt.datetime(1111, 11, 11), dt.datetime(1112, 11, 11))
