@@ -11,6 +11,7 @@ This script does not create any instances, rather just defines the class itself!
 # Modules needed to create instances of the class defined in this script:
 #import os
 #import pandas as pd
+#import praw
 #from psaw import PushshiftAPI
 #import datetime as dt
 #from datetime import datetime
@@ -38,20 +39,26 @@ class RedditScrape:
     Scrape comments, create self.comments attribute
     """
     result = self.api.search_comments(subreddit=self.subreddit_name,
+                                 filter=['subreddit', 'id', 'full_link', 'score', 
+                                         'title', 'is_video', 
+                                         'is_self' # if is_self, the post was removed
+                                        'media_embed' # if media_embed is a dict, it's likely a video link to youtube or something],
+                                 after = self.start_epoch, 
+                                 before = self.end_epoch)
+    generator = [x for x in result] # extract into list, save as attribute
+    self.comments = pd.DataFrame([x.d_ for x in generator]) 
+    
+  def scrape_posts(self):
+    """
+    Scrape submissions, calling them `posts` for short, that are posted to boards directly
+    """
+    result = self.api.search_submissions(subreddit=self.subreddit_name,
                                  filter=['author', 'selftext', 'created_utc', 'subreddit', 'body',
                                          'id','parent_id', 'score', 'author_flair_css_class',
                                          'author_flair_text', 'metadata'],
                                  after = self.start_epoch, 
                                  before = self.end_epoch)
-    self.comments = [x for x in result] # extract into list, save as attribute
-    
-  def as_data_frame(self, attribute_name):
-    """
-    After comments or posts have been scraped using scrape_comments or scrape_posts,
-    they can be returned as a data frame
-    """
-    #import pandas as pd # already done in __init__
-    return(pd.DataFrame(getattr(self, attribute_name)))
+    self.posts = [x for x in result] # extract into list, save as attribute
   
   # A method to save the desired data (comments, or later, posts)
   def save(self, attribute_name, filename):
