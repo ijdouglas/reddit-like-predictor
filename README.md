@@ -10,5 +10,5 @@ As a result, two questions arise:
 1. Considering that aesthetics are contained in the picture's **visual properties**, can we use computer vision to predict a behavioral outcome related to those visual properties, namely other user's upvoting behavior in response to the image, theoretically mediated by the visual pleasurability contained in the image's aesthetics.
 
 2. Since r/cat and r/dog have similar purpose (to provide pleasing pictures of either animal), can a general model predict upvotes for both (trained on both or trained on one and tested on the other)?
-- Such a model *may* imply that general aesthetic principles within the domain of say, domesticated mammals governs perception of visual stimuli (i.e., images of cats or dogs)
+    - Such a model *may* imply that general aesthetic principles within the domain of say, domesticated mammals governs perception of visual stimuli (i.e., images of cats or dogs)
 
