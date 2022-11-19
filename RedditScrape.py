@@ -42,23 +42,23 @@ class RedditScrape:
                                  filter=['subreddit', 'id', 'full_link', 'score', 
                                          'title', 'is_video', 
                                          'is_self' # if is_self, the post was removed
-                                        'media_embed' # if media_embed is a dict, it's likely a video link to youtube or something],
+                                        'media_embed'], # if media_embed is a dict, it's likely a video link to youtube or something],
                                  after = self.start_epoch, 
                                  before = self.end_epoch)
-    generator = [x for x in result] # extract into list, save as attribute
-    self.comments = pd.DataFrame([x.d_ for x in generator]) 
+    self.comments = pd.DataFrame([x.d_ for x in result]) 
     
   def scrape_posts(self):
     """
     Scrape submissions, calling them `posts` for short, that are posted to boards directly
     """
     result = self.api.search_submissions(subreddit=self.subreddit_name,
-                                 filter=['author', 'selftext', 'created_utc', 'subreddit', 'body',
-                                         'id','parent_id', 'score', 'author_flair_css_class',
-                                         'author_flair_text', 'metadata'],
+                                 filter=['subreddit', 'id', 'full_link', 'score', 
+                                         'title', 'is_video', 
+                                         'is_self' # if is_self, the post was removed
+                                        'media_embed'],
                                  after = self.start_epoch, 
                                  before = self.end_epoch)
-    self.posts = [x for x in result] # extract into list, save as attribute
+    self.posts = pd.DataFrame([x.d_ for x in result]) # extract into list, save as attribute
   
   # A method to save the desired data (comments, or later, posts)
   def save(self, attribute_name, filename):
