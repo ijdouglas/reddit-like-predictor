@@ -60,12 +60,12 @@ class RedditScrape:
                                  before = self.end_epoch)
     self.posts = pd.DataFrame([x.d_ for x in result]) # extract into list, save as attribute
   
-  # A method to save the desired data (comments, or later, posts)
+  # A method to save the desired data (comments, or submissions/posts)
+  # The purpose of this method is simply to facilitate saving with the proper encoding
   def save(self, attribute_name, filename):
     """
     :type attribute_name: str
     :type filename: str
     """
     x = getattr(self, attribute_name)
-    pd.DataFrame(x).to_csv(repr(filename), # basically r'filename'
-                           encoding='utf-8-sig', index = False)
+    x.to_csv(filename, encoding='utf-8-sig', index = False)
