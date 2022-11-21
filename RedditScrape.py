@@ -1,5 +1,5 @@
 """
-Define the `RedditScrape` class that stores attributes to define a subreddit name and date range.
+Define the `RedditScraper` class that stores attributes to define a subreddit name and date range.
 Included methods use these attributes to scrape either comments or posts in given subreddit within date range.
 The result of the above is to return a pandas data frame of results and save to desired location,
 using the method as_data_frame(self, 'comments') or as_data_frame(self, 'posts'). Other methods can save
@@ -17,7 +17,7 @@ This script does not create any instances, rather just defines the class itself!
 #from datetime import datetime
 #from time import sleep
 
-class RedditScrape:
+class RedditScraper:
   def __init__(self, subreddit_name, start_epoch, end_epoch):
     """
     :type subreddit_name: str
