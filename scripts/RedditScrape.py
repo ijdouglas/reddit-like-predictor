@@ -17,7 +17,7 @@ This script does not create any instances, rather just defines the class itself!
 #from datetime import datetime
 #from time import sleep
 
-class RedditScraper:
+class RedditScrape:
   def __init__(self, subreddit_name, start_epoch, end_epoch):
     """
     :type subreddit_name: str
