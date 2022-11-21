@@ -38,6 +38,7 @@ class RedditScraper:
     """
     Scrape comments, create self.comments attribute
     """
+    import pandas as pd
     result = self.api.search_comments(subreddit=self.subreddit_name,
                                  filter=['subreddit', 'id', 'full_link', 'score', 
                                          'title', 'is_video', 
@@ -51,6 +52,7 @@ class RedditScraper:
     """
     Scrape submissions, calling them `posts` for short, that are posted to boards directly
     """
+    import pandas as pd
     result = self.api.search_submissions(subreddit=self.subreddit_name,
                                  filter=['subreddit', 'id', 'full_link', 'score', 
                                          'title', 'is_video', 
@@ -67,5 +69,6 @@ class RedditScraper:
     :type attribute_name: str
     :type filename: str
     """
+    import pandas
     x = getattr(self, attribute_name)
     x.to_csv(filename, encoding='utf-8-sig', index = False)
