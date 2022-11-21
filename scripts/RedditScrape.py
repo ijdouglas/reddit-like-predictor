@@ -31,33 +31,39 @@ class RedditScrape:
     self.subreddit_name = subreddit_name
     self.start_epoch = start_epoch
     self.end_epoch = end_epoch
+    self.default_filter = ['author', 'created_utc', 'id', 'is_video', 'num_comments',
+                          'pinned', 'post_hint', 'retrieved_on', 'score',
+                          'subreddit', 'subreddit_subscribers', 'thumbnail',
+                          'thumbnail_height', 'thumbnail_width', 'url']
 
   
   # Here's the method to scrape comments, specifically using pushshift api
-  def scrape_comments(self):
+  def scrape_comments(self, filter = None):
     """
     Scrape comments, create self.comments attribute
     """
     import pandas as pd
+    if filter is None:
+      filter_ = self.default_filter
+    else:
+      filter_ = filter
     result = self.api.search_comments(subreddit=self.subreddit_name,
-                                 filter=['subreddit', 'id', 'full_link', 'score', 
-                                         'title', 'is_video', 
-                                         'is_self' # if is_self, the post was removed
-                                        'media_embed'], # if media_embed is a dict, it's likely a video link to youtube or something],
+                                 filter=filter_,
                                  after = self.start_epoch, 
                                  before = self.end_epoch)
     self.comments = pd.DataFrame([x.d_ for x in result]) 
     
-  def scrape_posts(self):
+  def scrape_posts(self, filter = None):
     """
     Scrape submissions, calling them `posts` for short, that are posted to boards directly
     """
     import pandas as pd
+    if filter is None:
+      filter_ = self.default_filter
+    else:
+      filter_ = filter
     result = self.api.search_submissions(subreddit=self.subreddit_name,
-                                 filter=['subreddit', 'id', 'full_link', 'score', 
-                                         'title', 'is_video', 
-                                         'is_self' # if is_self, the post was removed
-                                        'media_embed'],
+                                 filter = filter_,
                                  after = self.start_epoch, 
                                  before = self.end_epoch)
     self.posts = pd.DataFrame([x.d_ for x in result]) # extract into list, save as attribute
