@@ -24,4 +24,4 @@ class ImageDataset(Dataset):
         return image
 
 image_dataset = ImageDataset('images')
-dataloader = DataLoader(image_dataset, batch_size=32, shuffle=True)
+dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
